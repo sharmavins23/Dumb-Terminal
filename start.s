@@ -6,7 +6,7 @@
 @-------------------------------------------------------------------------------
 
 @ Base address for Raspberry Pi 4
-.equ        GPIO_BASE,       0xFE200000
+.equ        GPIO_BASE,      0xFE200000
 
 @ Base address for Raspberry Pi 3
 @.equ        GPIO_BASE,      0x3F200000
