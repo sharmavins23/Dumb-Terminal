@@ -1,3 +1,5 @@
+#include "asm.h"
+
 // Delays the code.
 void delay();
 
