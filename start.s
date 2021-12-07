@@ -18,20 +18,24 @@ _start:
             ldr         r1, =SET_BIT21
             str         r1, [r0, #GPSET0]
 
-looop:
-	        str         r1, [r0, #GPSET0]   @ TURN ON
-	        mov         r10, #0             @ DELAY
-            
-delay:                                      @ Loop to large number
-		    add         r10, r10, #1
-		    cmp         r10, r2	
-		    bne         delay	
-	        str         r1, [r0, #GPCLR0]   @ TURN OFF
-	        mov         r10, #0
+            b           blinkled            @ Go to C code for blinking control
 
-delay2:                                     @ DELAY2
-		    add         r10, r10, #1
-		    cmp         r10, r2	
-		    bne         delay2
+.global     delay
+delay:      mov         r10, #0             @ Clear r10
+
+dloop:      add         r10, r10, #1        @ Add 1
+            cmp         r10, r2             @ Check if overflow occurs
+            bne         dloop               @ If not, go back
+
+dend:       bx          lr                  @ Otherwise, move on
+
+.global     turnOnLED
+turnOnLED:  ldr         r1, =SET_BIT21      @ Load pin 21's address
+            str         r1, [r0, #GPSET0]   @ Set pin 21 to HIGH
+            bx          lr
+
+.global     turnOffLED
+turnOffLED: ldr         r1, =SET_BIT21      @ Load pin 21's address
+            str         r1, [r0, #GPCLR0]   @ Set pin 21 to LOW
+            bx          lr
             
-            b           looop
