@@ -6,7 +6,7 @@
 .equ        GPSET0,     0x1c		        @ GPSET0 register offset
 .equ        GPCLR0,     0x28		        @ GPCLR0 register offset
 .equ        SET_BIT3,   0x08		        @ Sets bit three b1000		
-.equ        SET_BIT21,  0x200000 	        @ Sets bit 21
+.equ        SET_BIT21,  0x200000            @ Sets bit 21
 .equ        COUNTER,    0xf0000
 
 _start:
