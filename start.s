@@ -1,70 +1,35 @@
-@ Export the starting address of our assembly
+.section    .init
 .global     _start
 
-@-------------------------------------------------------------------------------
-@ Addresses and Constants
-@-------------------------------------------------------------------------------
-
-@ Base address for Raspberry Pi 4
-.equ        GPIO_BASE,      0xFE200000
-
-@ Base address for Raspberry Pi 3
-@.equ        GPIO_BASE,      0x3F200000
-
-@ Offset for FSEL2 (GPIO pin 21 is output)
-.equ        GPFSEL2,        0x08
-@ Setup mode for GPIO 21 (output)
-.equ        GPIO_21_OUT,    0x8
-
-@ Offsets for FSET0 and FCLR0
-.equ        GPFSET0,        0x1c
-.equ        GPFCLR0,        0x28
-
-.equ        GPIOVAL,        0x200000    @ 1 << 21 to control pin
-
-@-------------------------------------------------------------------------------
-@ Main function
-@-------------------------------------------------------------------------------
+.equ        BASE,       0xfe200000      @ Base address
+.equ        GPFSEL2,    0x08		    @ FSEL2 register offset 
+.equ        GPSET0,     0x1c		    @ GPSET0 register offset
+.equ        GPCLR0,     0x28		    @ GPCLR0 register offset
+.equ        SET_BIT3,   0x08		    @ Sets bit three b1000		
+.equ        SET_BIT21,  0x200000 	    @ Sets bit 21
+.equ        COUNTER,    0xf0000
 
 _start:
+            ldr         r0,=BASE
+            ldr         r2,=COUNTER
+            ldr         r1,=SET_BIT3
+            str         r1, [r0,#GPFSEL2]
 
-            @ Base of our GPIO structure
-            ldr r0, =GPIO_BASE
+            ldr         r1, =SET_BIT21
+            str         r1, [r0,#GPSET0]
 
-            @ Set the GPIO 21 function as output
-            ldr r1, =GPIO_21_OUT        @ Load the address for GPIO 21 setup
-            str r1, [r0, #GPFSEL2]      @ Store GPIO_21_Out to FSEL2 bits
-
-            @ Now pin 21 is an output pin
-
-            @ Set counter
-            ldr r2, =0x800000
-
-loop:
-            @ Turn on the LED
-            ldr r1, =GPIOVAL            @ Value to write to set register
-            str r1, [r0, #GPFSET0]      @ Store this value in FSET bits
-
-            @ Wait for some time (delay)
-            eor r10, r10, r10
-
-delay1:
-            add r10, r10, #1
-            cmp r10, r2                 @ Compare when it overflows
-            bne delay1
-
-            @ Turn off the LED
-            ldr r1, =GPIOVAL
-            str r1, [r0, #GPFCLR0]      @ Turn on the CLEAR signal
-
-            @ Wait for some time (delay)
-            eor r10, r10, r10
-
-delay2:     
-            add r10, r10, #1
-            cmp r10, r2
-            bne delay2
-
-            @ Loop infinitely
-            b loop
-
+looop:
+	        str         r1, [r0,#GPSET0]	    @ TURN ON
+	        mov         r10,#0              @ DELAY
+delay:                                      @ Loop to large number
+		    add         r10,r10,#1
+		    cmp         r10,r2	
+		    bne         delay	
+	        str         r1,[r0,#GPCLR0]     @TURN OFF
+	        mov         r10,#0
+delay2:                                     @DELAY2
+		    add         r10,r10,#1
+		    cmp         r10,r2	
+		    bne         delay2
+            
+            b           looop
