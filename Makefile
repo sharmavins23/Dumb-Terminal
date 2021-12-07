@@ -1,20 +1,10 @@
-bin = kernel.img
-elf = kernel.elf
-obj = kernel.o					#@store object filename in variable obj
-code = start.s sysTimer.s     #led_button.s			#@store src code in code variable
-		
+# When we type make in the terminal...
+default:
+# We want to assemble our code from the start function
+	arm-none-eabi-as start.s -o start.o
+# We want to link our code together
+	arm-none-eabi-ld start.o -o kernel.elf
+# We'll copy the flat binary information out of the elf file into a bootable
+	arm-none-eabi-objcopy kernel.elf -O binary kernel7.img
 
-$(bin) : $(elf)
-	arm-none-eabi-objcopy $(elf) -O binary $(bin)
-
-$(elf) : $(obj)
-	arm-none-eabi-ld $(obj) -o $(elf) 
-
-
-$(obj) : $(code)
-	arm-none-eabi-as -g -o $(obj) $(code)
-
-
-
-clean:						#@clean tool
-	rm *.o#@will remove all files with .o extension
+# kernel7.img is the file that will be read off the SD card into flash memory
