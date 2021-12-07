@@ -3,9 +3,6 @@
 This project creates a dumb terminal on Raspberry Pi 4 Baremetal. The board will
 receive UART transmissions and send them back as quick as possible.
 
-Don't ask me what any of this does, I have no clue as of now. All credit to
-[David Welch](https://github.com/dwelch67) for all of this code.
-
 # License TL;DR
 
 This project is distributed under the MIT license. This is a paraphrasing of a
