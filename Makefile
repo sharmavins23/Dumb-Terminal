@@ -8,11 +8,11 @@ code = start.s
 $(bin) : $(elf)
 	arm-none-eabi-objcopy $(elf) -O binary $(bin)
 
-$(cobj) : $(ccode)
-	arm-none-eabi-gcc -c $(ccode) -o $(cobj)
-
 $(elf) : $(obj)
 	arm-none-eabi-ld $(obj) $(cobj) -o $(elf)
+	
+$(cobj) : $(ccode)
+	arm-none-eabi-gcc -c $(ccode) -o $(cobj)
 
 $(obj) : $(code)
 	arm-none-eabi-as -g -o $(obj) $(code)

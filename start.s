@@ -15,9 +15,6 @@ _start:
             ldr         r1, =SET_BIT3
             str         r1, [r0, #GPFSEL2]
 
-            ldr         r1, =SET_BIT21
-            str         r1, [r0, #GPSET0]
-
             b           blinkled            @ Go to C code for blinking control
 
 .global     delay
@@ -38,4 +35,3 @@ turnOnLED:  ldr         r1, =SET_BIT21      @ Load pin 21's address
 turnOffLED: ldr         r1, =SET_BIT21      @ Load pin 21's address
             str         r1, [r0, #GPCLR0]   @ Set pin 21 to LOW
             bx          lr
-            
