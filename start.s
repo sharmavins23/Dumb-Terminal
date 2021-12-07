@@ -49,7 +49,7 @@ loop:
             eor r10, r10, r10
 
 delay1:
-            add r10, r10
+            add r10, r10, #1
             cmp r10, r2                 @ Compare when it overflows
             bne delay1
 
@@ -61,7 +61,7 @@ delay1:
             eor r10, r10, r10
 
 delay2:     
-            add r10, r10
+            add r10, r10, #1
             cmp r10, r2
             bne delay2
 
