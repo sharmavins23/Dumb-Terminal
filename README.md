@@ -3,6 +3,19 @@
 This project creates a dumb terminal on Raspberry Pi 4 Baremetal. The board will
 receive UART transmissions and send them back as quick as possible.
 
+Currently, the project blinks one LED on pin 21. The actual functions are listed
+in assembly code, and the program calls C code to compile it.
+
+## Project TO-DO:
+
+- Set up UART initialization and serial communication through C libraries and
+  utils
+- Redo the makefile to not have code everywhere in the root filespace
+- Compile objects into an objects folder, such that only the objects folder can
+  be loaded
+- Figure out which ISA this is using (probably only T32, have to check GNU
+  toolchains)
+
 # License TL;DR
 
 This project is distributed under the MIT license. This is a paraphrasing of a
