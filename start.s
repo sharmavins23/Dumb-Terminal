@@ -1,6 +1,8 @@
 .section    .init
 .global     _start
 
+#include "blink_LED.c"
+
 .equ        BASE,       0xfe200000          @ Base address
 .equ        GPFSEL2,    0x08		        @ FSEL2 register offset 
 .equ        GPSET0,     0x1c		        @ GPSET0 register offset
