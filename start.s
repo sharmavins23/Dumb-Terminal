@@ -17,7 +17,7 @@
 .equ        GPIO_21_OUT,    0x8
 
 @ Offsets for FSET0 and FCLR0
-.equ        GPFSET0,        0x14
+.equ        GPFSET0,        0x1c
 .equ        GPFCLR0,        0x28
 
 .equ        GPIOVAL,        0x200000    @ 1 << 21 to control pin
