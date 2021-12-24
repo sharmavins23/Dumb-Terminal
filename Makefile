@@ -5,17 +5,19 @@ ccode = blink_LED.c
 cobj = blink_LED.o
 code = start.s
 
+armgnu = aarch64-none-elf
+
 $(bin) : $(elf)
-	arm-none-eabi-objcopy $(elf) -O binary $(bin)
+	$(armgnu)-objcopy $(elf) -O binary $(bin)
 
 $(elf) : $(obj)
-	arm-none-eabi-ld $(obj) $(cobj) -o $(elf)
+	$(armgnu)-ld $(obj) $(cobj) -o $(elf)
 	
 $(cobj) : $(ccode)
-	arm-none-eabi-gcc -c $(ccode) -o $(cobj)
+	$(armgnu)-gcc -c $(ccode) -o $(cobj)
 
 $(obj) : $(code)
-	arm-none-eabi-as -g -o $(obj) $(code)
+	$(armgnu)-as -g -o $(obj) $(code)
 
 clean:
 	rm *.o
